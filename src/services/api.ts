@@ -44,5 +44,6 @@ export const notesAPI = {
 
 export const adminAPI = {
     createAdmin: (email: string, password: string) =>
-        api.post('/admin/create', { email, password }),
+        api.post('/auth/register/admin', { email, password }),
+    getUsers: () => api.get('/users'),
 };

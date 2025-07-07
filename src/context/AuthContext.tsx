@@ -22,7 +22,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const login = (response: AuthResponse) => {
         const userInfo: UserInfo = {
-            email: response.sub,
+            id: response.id,
+            email: response.email,
             role: response.role
         };
         localStorage.setItem('token', response.token);

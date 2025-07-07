@@ -1,9 +1,3 @@
-export interface User {
-    id: bigint;
-    email: string;
-    role: 'user' | 'admin';
-}
-
 export interface Note {
     id: bigint;
     title: string;
@@ -13,12 +7,14 @@ export interface Note {
 }
 
 export interface AuthResponse {
-    sub: string;
+    id: bigint;
+    email: string;
     role: string;
     token: string;
 }
 
 export interface UserInfo {
+    id: bigint;
     email: string;
     role: string
 }
