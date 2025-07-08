@@ -1,15 +1,16 @@
 // src/components/Login.tsx
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { authAPI } from '../services/api';
+import { useAuth } from '../context/AuthContext.tsx';
+import { authAPI } from '../services/api.ts';
+import {useToast} from "../context/ToastContext.tsx";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const { login } = useAuth();
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -17,14 +18,14 @@ const Login = () => {
             const response = await authAPI.login(email, password);
             login(response.data);
             if (response.data.role === 'ROLE_ADMIN') {
-                console.log('Should navigate to admin'); // Log before admin navigation
+                console.log('Should navigate to admin');
                 navigate('/admin');
             } else {
-                console.log('Should navigate to dashboard'); // Log before dashboard navigation
+                console.log('Should navigate to dashboard');
                 navigate('/dashboard');
             }
-        } catch (err) {
-            setError('Invalid credentials');
+        } catch (error: any) {
+            showToast(`Failed to login: ${error.message}`, 'error');
         }
     };
 
@@ -34,13 +35,6 @@ const Login = () => {
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-gray-900">Login</h1>
                 </div>
-
-                {error && (
-                    <div className="bg-red-50 text-red-500 p-4 rounded-md text-center">
-                        {error}
-                    </div>
-                )}
-
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">

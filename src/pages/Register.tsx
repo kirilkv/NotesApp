@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { authAPI } from '../services/api';
-import { useAuth } from '../context/AuthContext';
+import { authAPI } from '../services/api.ts';
+import { useAuth } from '../context/AuthContext.tsx';
+import {useToast} from "../context/ToastContext.tsx";
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
+    const { showToast } = useToast();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const response = await authAPI.register(email, password);
-            login(response.data.token);
+            login(response.data);
             navigate('/dashboard');
-        } catch (err) {
-            setError('Registration failed. Email might be taken.');
+        } catch (error: any) {
+            showToast(`Failed to register: ${error.response.data.errors[0].defaultMessage}`, 'error');
         }
     };
 
@@ -27,11 +28,6 @@ const Register = () => {
                 <h2 className="text-center text-3xl font-extrabold text-gray-900">
                     Create your account
                 </h2>
-                {error && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                        {error}
-                    </div>
-                )}
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <input

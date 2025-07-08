@@ -35,6 +35,7 @@ export const authAPI = {
 
 export const notesAPI = {
     getNotes: () => api.get<Note[]>('/notes'),
+    getUserNotes: (userId: bigint) => api.get<Note[]>(`/notes?userId=${userId}`),
     createNote: (data: { title: string; content: string }) =>
         api.post<Note>('/notes', data),
     updateNote: (id: bigint, data: { title: string; content: string }) =>
