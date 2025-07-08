@@ -23,7 +23,7 @@ const UserDashboard: React.FC = () => {
         try {
             const response = await notesAPI.getNotes();
             setNotes(response.data);
-        } catch (error) {
+        } catch (error: any) {
             showToast(`Failed to fetch notes: ${error.message}`, 'error');
         }
     };
@@ -38,7 +38,7 @@ const UserDashboard: React.FC = () => {
             setNotes((prev) => [...prev, response.data]);
             setSelectedNote(null);
             showToast('Note created successfully!', 'success');
-        } catch (error) {
+        } catch (error: any) {
             showToast(`Failed to create note: ${error.message}`, 'error');
         } finally {
             setIsCreateNoteModalOpen(false);
@@ -100,7 +100,7 @@ const UserDashboard: React.FC = () => {
                                 )
                             );
                             showToast('Note updated successfully!', 'success');
-                        } catch (error) {
+                        } catch (error: any) {
                             showToast(`Failed to update note: ${error.message}`, 'error');
                         } finally {
                             setSelectedNote(null);

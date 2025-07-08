@@ -26,7 +26,7 @@ const UserShow: React.FC<UserShowProps> = ({ user, onBack }) => {
         try {
             const response = await notesAPI.getUserNotes(user.id);
             setNotes(response.data);
-        } catch (error) {
+        } catch (error: any) {
             showToast(`Failed to fetch user notes: ${error.message}`, 'error');
         } finally {
             setIsLoading(false);

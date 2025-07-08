@@ -39,7 +39,7 @@ const AdminDashboard: React.FC = () => {
         try {
             const response = await adminAPI.getUsers();
             setUsers(response.data);
-        } catch (error) {
+        } catch (error: any) {
             showToast(`Failed to fetch users: ${error.message}`, 'error')
         }
     };
