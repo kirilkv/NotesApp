@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseModal from './BaseModal.tsx';
+import Spinner from "../Spinner.tsx";
 
 interface ConfirmationModalProps {
     isOpen: boolean;
@@ -7,6 +8,7 @@ interface ConfirmationModalProps {
     message: string;
     onConfirm: () => void;
     onCancel: () => void;
+    isLoading?: boolean;
 }
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
@@ -15,6 +17,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                                                                  message,
                                                                  onConfirm,
                                                                  onCancel,
+                                                                 isLoading,
                                                              }) => {
     return (
         <BaseModal isOpen={isOpen} onClose={onCancel}>
@@ -31,7 +34,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                     className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                     onClick={onConfirm}
                 >
-                    Confirm
+                    {isLoading ? <Spinner /> : 'Delete'}
                 </button>
             </div>
         </BaseModal>

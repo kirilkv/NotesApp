@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import BaseModal from './BaseModal.tsx';
 import type { Note as NoteType } from '../../types';
+import Spinner from "../Spinner.tsx";
 
 interface ViewNoteModalProps {
     isOpen: boolean;
@@ -8,6 +9,7 @@ interface ViewNoteModalProps {
     isAdmin?: boolean;
     onClose: () => void;
     onUpdate?: (id: bigint, title: string, content: string) => void;
+    isLoading?: boolean;
 }
 
 const ViewNoteModal: React.FC<ViewNoteModalProps> = ({
@@ -16,6 +18,7 @@ const ViewNoteModal: React.FC<ViewNoteModalProps> = ({
                                                          isAdmin,
                                                          onClose,
                                                          onUpdate,
+                                                         isLoading,
                                                      }) => {
     const [title, setTitle] = useState(note.title);
     const [content, setContent] = useState(note.content);
@@ -58,7 +61,7 @@ const ViewNoteModal: React.FC<ViewNoteModalProps> = ({
                         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         onClick={handleUpdate}
                     >
-                        Save
+                        {isLoading ? <Spinner /> : 'Save'}
                     </button>
                 )}
                 <button

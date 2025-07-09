@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import BaseModal from './BaseModal.tsx';
 import {useToast} from "../../context/ToastContext.tsx";
+import Spinner from "../Spinner.tsx";
 
 interface CreateNoteModalProps {
     isOpen: boolean;
     onClose: () => void;
     onCreate: (title: string, content: string) => void;
+    isLoading: boolean;
 }
 
-const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onCreate }) => {
+const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onCreate, isLoading }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const { showToast } = useToast();
@@ -53,7 +55,7 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onCr
                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                     onClick={handleSubmit}
                 >
-                    Create
+                    {isLoading ? <Spinner /> : 'Create'}
                 </button>
             </div>
         </BaseModal>

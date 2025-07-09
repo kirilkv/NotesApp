@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.tsx';
 import { authAPI } from '../services/api.ts';
 import {useToast} from "../context/ToastContext.tsx";
+import Spinner from "../components/Spinner.tsx";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -11,9 +12,12 @@ const Login = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
     const { showToast } = useToast();
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const response = await authAPI.login(email, password);
             login(response.data);
@@ -26,6 +30,8 @@ const Login = () => {
             }
         } catch (error: any) {
             showToast(`Failed to login: ${error.message}`, 'error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -70,7 +76,7 @@ const Login = () => {
                         type="submit"
                         className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium"
                     >
-                        Sign in
+                        {isLoading ? <Spinner /> : 'Login'}
                     </button>
                 </form>
 
