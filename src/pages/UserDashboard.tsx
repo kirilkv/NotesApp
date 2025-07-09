@@ -104,6 +104,7 @@ const UserDashboard: React.FC = () => {
                     isAdmin={false} // Regular user can edit
                     onClose={() => setSelectedNote(null)}
                     onUpdate={async (id, title, content) => {
+                        setIsLoading(true);
                         try {
                             await notesAPI.updateNote(id, { title, content });
                             setNotes((prev) =>
@@ -116,6 +117,7 @@ const UserDashboard: React.FC = () => {
                             showToast(`Failed to update note: ${error.message}`, 'error');
                         } finally {
                             setSelectedNote(null);
+                            setIsLoading(false);
                         }
                     }}
                 />
