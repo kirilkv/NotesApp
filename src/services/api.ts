@@ -2,7 +2,7 @@ import axios from 'axios';
 import type {AuthResponse, Note} from "../types";
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api/'
+    baseURL: 'https://notesapi-morning-darkness-3178.fly.dev/api/'
 });
 
 api.interceptors.request.use((config) => {
