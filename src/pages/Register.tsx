@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../services/api.ts';
 import { useAuth } from '../context/AuthContext.tsx';
 import {useToast} from "../context/ToastContext.tsx";
+import Spinner from "../components/Spinner.tsx";
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -10,15 +11,19 @@ const Register = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
     const { showToast } = useToast();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const response = await authAPI.register(email, password);
             login(response.data);
             navigate('/dashboard');
         } catch (error: any) {
             showToast(`Failed to register: ${error.response.data.errors[0].defaultMessage}`, 'error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -51,7 +56,7 @@ const Register = () => {
                         type="submit"
                         className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Register
+                        {isLoading ? <Spinner /> : 'Register'}
                     </button>
                     <div className="text-center">
                         <Link to="/login" className="text-indigo-600 hover:text-indigo-500">

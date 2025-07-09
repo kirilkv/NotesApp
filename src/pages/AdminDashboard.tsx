@@ -17,6 +17,7 @@ const AdminDashboard: React.FC = () => {
     const [selectedNote, setSelectedNote] = useState<NoteType | null>(null);
     const [users, setUsers] = useState<UserInfo[]>([]);
     const [selectedUser, setSelectedUser] = useState<UserInfo | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (activeTab === 'notes') {
@@ -27,20 +28,26 @@ const AdminDashboard: React.FC = () => {
     }, [activeTab]);
 
     const fetchAllNotes = async () => {
+        setIsLoading(true);
         try {
             const response = await notesAPI.getNotes();
             setNotes(response.data);
         } catch {
             showToast('Failed to fetch notes.', 'error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const fetchAllUsers = async () => {
+        setIsLoading(true);
         try {
             const response = await adminAPI.getUsers();
             setUsers(response.data);
         } catch (error: any) {
             showToast(`Failed to fetch users: ${error.message}`, 'error')
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -68,6 +75,7 @@ const AdminDashboard: React.FC = () => {
                     onDelete={() => {
                     }}
                     isAdmin
+                    isLoading={isLoading}
                 />
             )}
             {activeTab === 'users' && (
@@ -80,7 +88,7 @@ const AdminDashboard: React.FC = () => {
                             >
                                 + Create Admin
                             </button>
-                            <UsersList users={users} setSelectedUser={setSelectedUser} />
+                            <UsersList users={users} setSelectedUser={setSelectedUser} isLoading={isLoading}/>
                         </div>
                     ) : (
                         <UserShow

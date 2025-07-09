@@ -1,11 +1,15 @@
 import React from 'react';
 import type {UserInfo} from "../types";
+import Spinner from "./Spinner.tsx";
 
 interface UserListProps {
     users: UserInfo[]
     setSelectedUser: React.Dispatch<React.SetStateAction<UserInfo | null>>
+    isLoading?: boolean;
 }
-const UsersList: React.FC<UserListProps> = ({users, setSelectedUser}) => {
+const UsersList: React.FC<UserListProps> = ({users, setSelectedUser, isLoading}) => {
+    if (isLoading) return <Spinner />;
+
     return (
         <div className="mt-6">
             <h2 className="text-2xl font-bold mb-4">All Users</h2>

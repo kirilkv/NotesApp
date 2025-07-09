@@ -1,19 +1,22 @@
 import React from 'react';
 import type {Note as NoteType} from '../types';
+import Spinner from "./Spinner.tsx";
 
 interface NotesListProps {
     notes: NoteType[];
     onView: (id: bigint) => void;
     onDelete: (id: bigint) => void;
     isAdmin?: boolean;
+    isLoading?: boolean;
 }
 
-const NotesList: React.FC<NotesListProps> = ({notes, onView, onDelete, isAdmin}) => {
+const NotesList: React.FC<NotesListProps> = ({notes, onView, onDelete, isAdmin, isLoading}) => {
     const truncateContent = (content: string, maxLength: number) => {
         return content.length > maxLength
             ? content.substring(0, maxLength) + '...'
             : content;
     };
+    if (isLoading) return <Spinner />;
 
     return (
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">

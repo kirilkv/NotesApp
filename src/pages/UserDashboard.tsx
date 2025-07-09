@@ -6,6 +6,7 @@ import ViewNoteModal from '../components/modals/ViewNoteModal.tsx';
 import { notesAPI } from '../services/api.ts';
 import { useToast } from '../context/ToastContext.tsx';
 import type { Note as NoteType } from '../types';
+import Spinner from "../components/Spinner.tsx";
 
 const UserDashboard: React.FC = () => {
     const { showToast } = useToast();
@@ -14,17 +15,21 @@ const UserDashboard: React.FC = () => {
     const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false);
     const [noteToDelete, setNoteToDelete] = useState<NoteType | null>(null);
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         fetchNotes();
     }, []);
 
     const fetchNotes = async () => {
+        setIsLoading(true);
         try {
             const response = await notesAPI.getNotes();
             setNotes(response.data);
         } catch (error: any) {
             showToast(`Failed to fetch notes: ${error.message}`, 'error');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -33,6 +38,7 @@ const UserDashboard: React.FC = () => {
     };
 
     const handleSaveNote = async (title: string, content: string) => {
+        setIsLoading(true);
         try {
             const response = await notesAPI.createNote({ title, content });
             setNotes((prev) => [...prev, response.data]);
@@ -42,6 +48,7 @@ const UserDashboard: React.FC = () => {
             showToast(`Failed to create note: ${error.message}`, 'error');
         } finally {
             setIsCreateNoteModalOpen(false);
+            setIsLoading(false);
         }
     };
 
@@ -55,6 +62,7 @@ const UserDashboard: React.FC = () => {
 
     const handleDeleteNote = async () => {
         if (noteToDelete) {
+            setIsLoading(true)
             try {
                 await notesAPI.deleteNote(noteToDelete.id);
                 setNotes((prev) => prev.filter((note) => note.id !== noteToDelete.id));
@@ -64,9 +72,12 @@ const UserDashboard: React.FC = () => {
             } finally {
                 setIsConfirmationModalOpen(false);
                 setNoteToDelete(null);
+                setIsLoading(false)
             }
         }
     };
+
+    if (isLoading) return <Spinner />
 
     return (
         <div>
@@ -89,6 +100,7 @@ const UserDashboard: React.FC = () => {
                 <ViewNoteModal
                     isOpen={!!selectedNote}
                     note={selectedNote}
+                    isLoading={isLoading}
                     isAdmin={false} // Regular user can edit
                     onClose={() => setSelectedNote(null)}
                     onUpdate={async (id, title, content) => {
