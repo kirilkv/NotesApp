@@ -20,7 +20,6 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onCr
             onCreate(title, content);
             setContent('');
             setTitle('');
-            onClose();
         } else {
             showToast('Title and content are required.', 'error');
         }

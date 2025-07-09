@@ -25,7 +25,6 @@ const ViewNoteModal: React.FC<ViewNoteModalProps> = ({
 
     const handleUpdate = () => {
         if (onUpdate) onUpdate(note.id, title, content);
-        onClose();
     };
 
     return (
