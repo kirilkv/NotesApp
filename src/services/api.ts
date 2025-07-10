@@ -5,6 +5,11 @@ const api = axios.create({
     baseURL: 'https://notesapi-morning-darkness-3178.fly.dev/api/'
 });
 
+
+// const api = axios.create({
+//     baseURL: 'http://localhost:8080/api/'
+// });
+
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {

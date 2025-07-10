@@ -1,6 +1,7 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useState, useContext } from 'react';
 import type {AuthResponse, UserInfo} from '../types';
+import {useToast} from "./ToastContext.tsx";
 
 interface AuthContextType {
     user: UserInfo | null;
@@ -16,6 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const storedUser = localStorage.getItem('user');
         return storedUser ? JSON.parse(storedUser) : null;
     });
+    const { showToast } = useToast();
 
     const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'))
 
@@ -30,6 +32,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.setItem('user', JSON.stringify(userInfo));
         setToken(response.token);
         setUser(userInfo);
+        showToast('Login successful!', 'success');
     };
 
     const logout = () => {
@@ -37,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         localStorage.removeItem('user');
         setToken(null);
         setUser(null);
-
+        showToast('Logout successful!', 'success');
     };
 
     return (

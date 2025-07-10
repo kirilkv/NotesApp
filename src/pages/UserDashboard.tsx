@@ -43,11 +43,11 @@ const UserDashboard: React.FC = () => {
             const response = await notesAPI.createNote({ title, content });
             setNotes((prev) => [...prev, response.data]);
             setSelectedNote(null);
+            setIsCreateNoteModalOpen(false);
             showToast('Note created successfully!', 'success');
         } catch (error: any) {
-            showToast(`Failed to create note: ${error.message}`, 'error');
+            showToast(`Failed to create note: ${error.response.data.message}`, 'error');
         } finally {
-            setIsCreateNoteModalOpen(false);
             setIsLoading(false);
         }
     };
@@ -112,11 +112,11 @@ const UserDashboard: React.FC = () => {
                                     note.id === id ? { ...note, title, content } : note
                                 )
                             );
+                            setSelectedNote(null);
                             showToast('Note updated successfully!', 'success');
                         } catch (error: any) {
-                            showToast(`Failed to update note: ${error.message}`, 'error');
+                            showToast(`Failed to update note: ${error.response.data.message}`, 'error');
                         } finally {
-                            setSelectedNote(null);
                             setIsLoading(false);
                         }
                     }}

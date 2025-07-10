@@ -4,6 +4,7 @@ export interface Note {
     content: string;
     userId: bigint;
     createdAt: string;
+    updatedAt: string;
 }
 
 export interface AuthResponse {
@@ -17,5 +18,5 @@ export interface AuthResponse {
 export interface UserInfo {
     id: bigint;
     email: string;
-    role: string
+    role: string;
 }

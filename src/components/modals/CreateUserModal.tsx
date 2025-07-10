@@ -27,7 +27,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ isOpen, onClose, onCr
             onClose();
             setIsSubmitting(false);
         } catch (error: any) {
-            showToast(`Failed to create Admin: ${error.response.data.errors[0].defaultMessage}`, 'error');
+            showToast(`Failed to create Admin: ${error.response.data.message}`, 'error');
         } finally {
             setIsSubmitting(false);
         }

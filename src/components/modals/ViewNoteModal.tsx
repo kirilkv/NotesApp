@@ -53,6 +53,12 @@ const ViewNoteModal: React.FC<ViewNoteModalProps> = ({
                         />
                     </>
                 )}
+                <p className="mt-4 text-gray-600">
+                    Created: {new Date(note.createdAt).toLocaleString()}
+                </p>
+                <p className="mt-4 text-gray-600">
+                    Last Updated: {new Date(note.updatedAt).toLocaleString()}
+                </p>
             </div>
             <div className="mt-4 flex justify-end">
                 {!isAdmin && (

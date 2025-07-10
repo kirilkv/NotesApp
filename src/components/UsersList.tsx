@@ -18,6 +18,9 @@ const UsersList: React.FC<UserListProps> = ({users, setSelectedUser, isLoading})
                     <thead className="bg-gray-50">
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            User ID
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Email
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -32,6 +35,9 @@ const UsersList: React.FC<UserListProps> = ({users, setSelectedUser, isLoading})
                             className="cursor-pointer hover:bg-gray-100"
                             onClick={() => setSelectedUser(user)}
                         >
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                {user.id}
+                            </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 {user.email}
                             </td>

@@ -29,7 +29,7 @@ const Login = () => {
                 navigate('/dashboard');
             }
         } catch (error: any) {
-            showToast(`Failed to login: ${error.message}`, 'error');
+            showToast(`Failed to login: ${error.response.data.message}`, 'error');
         } finally {
             setIsLoading(false);
         }
