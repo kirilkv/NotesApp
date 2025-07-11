@@ -25,6 +25,9 @@ const NotesList: React.FC<NotesListProps> = ({notes, onView, onDelete, isAdmin, 
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                     <tr>
+                        {isAdmin && (<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            User Id
+                        </th>)}
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Title
                         </th>
@@ -41,6 +44,9 @@ const NotesList: React.FC<NotesListProps> = ({notes, onView, onDelete, isAdmin, 
                     <tbody className="bg-white divide-y divide-gray-200">
                     {notes.map((note) => (
                         <tr key={note.id} className="hover:bg-gray-50">
+                            {isAdmin && (<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {truncateContent(note.title, 50)}
+                            </td>)}
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 {truncateContent(note.title, 50)}
                             </td>
