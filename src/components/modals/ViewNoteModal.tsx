@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BaseModal from './BaseModal.tsx';
 import type { Note as NoteType } from '../../types';
 import Spinner from "../Spinner.tsx";
+import {formatUTCDateToLocalTimeZone} from "../../utils/formatDate.ts";
 
 interface ViewNoteModalProps {
     isOpen: boolean;
@@ -54,10 +55,10 @@ const ViewNoteModal: React.FC<ViewNoteModalProps> = ({
                     </>
                 )}
                 <p className="mt-4 text-gray-600">
-                    Created: {new Date(note.createdAt).toLocaleString()}
+                    Created: {formatUTCDateToLocalTimeZone(note.createdAt)}
                 </p>
                 <p className="mt-4 text-gray-600">
-                    Last Updated: {new Date(note.updatedAt).toLocaleString()}
+                    Last Updated: {formatUTCDateToLocalTimeZone(note.updatedAt)}
                 </p>
             </div>
             <div className="mt-4 flex justify-end">
