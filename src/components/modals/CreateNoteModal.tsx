@@ -18,6 +18,8 @@ const CreateNoteModal: React.FC<CreateNoteModalProps> = ({ isOpen, onClose, onCr
     const handleSubmit = () => {
         if (title.trim() && content.trim()) {
             onCreate(title, content);
+            setTitle('');
+            setContent('');
         } else {
             showToast('Title and content are required.', 'error');
         }
