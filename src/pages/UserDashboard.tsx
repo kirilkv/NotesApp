@@ -106,10 +106,10 @@ const UserDashboard: React.FC = () => {
                     onUpdate={async (id, title, content) => {
                         setIsLoading(true);
                         try {
-                            await notesAPI.updateNote(id, { title, content });
+                            const updatedNote = await notesAPI.updateNote(id, { title, content });
                             setNotes((prev) =>
                                 prev.map((note) =>
-                                    note.id === id ? { ...note, title, content } : note
+                                    note.id === id ? updatedNote.data : note
                                 )
                             );
                             setSelectedNote(null);
